@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build output
+dist/
+build/
+
+# Uploads (optional - uncomment if you don't want uploaded files in git)
+# uploads/
+
+# Private keys
+*.key
+*.pem
+
+# Package lock (uncomment if you prefer not to commit it)
+# package-lock.json
