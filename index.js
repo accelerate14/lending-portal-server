@@ -80,43 +80,7 @@ app.use('/api/borrower/register', authLimiter);
 // ==========================================
 // CORS CONFIGURATION
 // ==========================================
-
-// Dynamic patterns for allowed origins (localhost, local network, UiPath)
-const allowedOriginPatterns = [
-  /^https?:\/\/localhost(:\d+)?$/,                    // localhost with any port
-  /^https?:\/\/127\.0\.0\.1(:\d+)?$/,                 // loopback with any port
-  /^https?:\/\/192\.168\.\d+\.\d+(:\d+)?$/,           // local network (192.168.x.x)
-  /^https?:\/\/10\.\d+\.\d+\.\d+(:\d+)?$/,            // local network (10.x.x.x)
-  /^https?:\/\/172\.(1[6-9]|2\d|3[01])\.\d+\.\d+(:\d+)?$/, // local network (172.16-31.x.x)
-  /^https?:\/\/cloud\.uipath\.com/,                   // UiPath cloud
-];
-
-// Specific production origins from env var
-const specificOrigins = process.env.ALLOWED_ORIGINS 
-  ? process.env.ALLOWED_ORIGINS.split(',') 
-  : [];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    // Check against dynamic patterns
-    const isPatternMatch = allowedOriginPatterns.some(pattern => pattern.test(origin));
-    // Check against specific origins from env
-    const isSpecificMatch = specificOrigins.includes(origin);
-    
-    if (isPatternMatch || isSpecificMatch) {
-      callback(null, true);
-    } else {
-      logger.warn(`CORS blocked origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-}));
+app.use(cors());
 
 // ==========================================
 // BODY PARSING & SESSION
